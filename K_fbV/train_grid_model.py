@@ -11,16 +11,19 @@ import tune_numRound_maxDepth as tnm
 import factorize_predictor as fp
 
 def train_model(coord_tup, train_grid, param, model_dict, unique_class_dict, feature_list,
-                predictor_name, predictor_idx, dump_model_txt = False,
+                predictor_name, dump_model_txt = False,
                 model_txt_file = None, save_model = False, save_model_file = None,
                 tree_max_depth = 5, leaf_mltpr = 1, tree_mltpr = 1):
     feature_list.append(predictor_name) # can only have 1 predictor
     grid = train_grid[coord_tup][feature_list]
 
+    predictor_idx = grid.columns.get_loc(predictor_name)
+    
     train, original_label = fp.factorize_predictor(grid, predictor_idx)
     param['num_class'] = len(original_label)
 
     num_round, param['max_depth'] = tnm.tune_numRound_maxDepth(param['num_class'], num_leaf_mltpr = leaf_mltpr)
+    print "number of boosters in training: " + str(num_round)
 
     train_X, train_Y = fps.feature_predictor_split(train, predictor_idx)
     xg_train = xgb.DMatrix( train_X, label = train_Y)
