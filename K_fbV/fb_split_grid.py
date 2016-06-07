@@ -90,12 +90,11 @@ def get_grids(train, test, outputFile = False, train_output = None, test_output 
 
     if outputFile:
         for key in trainDict:
-            filename = 'train_' + 'x' + str(key[0]) + '_y' + str(key[1]) + '_grid.csv'
+            filename = 'train_' + 'x' + str(key[0]) + '_y' + str(key[1]) + '.csv'
             fullpath = os.path.join(train_output, filename)
             trainDict[key].to_csv(fullpath, index = False)
         for key in testDict:
-            filename = 'test_' + 'x' + str(key[0]) + '_y' + str(key[1]) + '_grid.csv'
+            filename = 'test_' + 'x' + str(key[0]) + '_y' + str(key[1]) + '.csv'
             fullpath = os.path.join(test_output, filename)
             testDict[key].to_csv(fullpath, index = False)
-    else:
-        return (trainDict, testDict)
+    return (trainDict, testDict)

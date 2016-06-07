@@ -8,6 +8,8 @@ import pandas as pd
 
 import topK_prob as tp
 
+import os
+
 def predict_output(coord_tup, test_grid, model_dict, unique_class_dict, prediction_dict,
                    test_row_id, feature_list, saveFile = False, outputPath = None):
     rowID = test_grid[coord_tup][test_row_id].tolist() # ignore existing pandas indicies
@@ -26,3 +28,8 @@ def predict_output(coord_tup, test_grid, model_dict, unique_class_dict, predicti
     df_predictions.insert(0, test_row_id, rowID)
 
     prediction_dict[coord_tup] = df_predictions
+
+    if saveFile:
+	filename = 'x' + str(coord_tup[0]) + '_y' + str(coord_tup[1]) + '_predict.csv'
+	fullpath = os.path.join(outputPath, filename)
+        df_predictions.to_csv(fullpath, index = False)
