@@ -10,6 +10,8 @@ import tune_numRound_maxDepth as tnm
 
 import factorize_predictor as fp
 
+import os
+
 def train_model(coord_tup, train_grid, param, model_dict, unique_class_dict, feature_list,
                 predictor_name, dump_model_txt = False,
                 model_txt_file = None, save_model = False, save_model_file = None,
@@ -32,11 +34,17 @@ def train_model(coord_tup, train_grid, param, model_dict, unique_class_dict, fea
     watchlist = [ (xg_train,'train') ]
 
     # fill {(x,y) : xgb_model}
-    model_dict[coord_tup] = xgb.train(param, xg_train, num_round, watchlist)
+    bst = xgb.train(param, xg_train, num_round, watchlist)
+    model_dict[coord_tup] = bst
+
     # {(x,y) : list of unique classes for that grid - in original labels}
     unique_class_dict[coord_tup] = original_label
 
     if dump_model_txt:
-        bst.dump_model(model_txt_file)
+	filename = 'x' + str(coord_tup[0]) + '_y' + str(coord_tup[1]) + '_model.txt'
+	fullpath = os.path.join(model_txt_file, filename)
+        bst.dump_model(fullpath)
     if save_model:
-        bst.save_model(save_model_file)
+	filename = 'x' + str(coord_tup[0]) + '_y' + str(coord_tup[1]) + '.model'
+	fullpath = os.path.join(save_model_file, filename)
+        bst.save_model(fullpath)
