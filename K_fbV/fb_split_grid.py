@@ -44,27 +44,18 @@ def cut_y_bars_in_x_bar(x_bars, y, y_bin_tuple):
 '''
 input parameters for def get_grids():
 - train - input filename/dataframe for training set
-
 - test - input filename/dataframe for test set
-
 - outputFile - boolean that tells whether you want NxM files as output or a dict of pd.DataFrame
                as output, format would be (x_idx, y_idx) : df_for_grid. If you want file as output
                then x_idx, y_idx will appear in output files' name
-
 - train_output - only used if the 3rd parameter is set to True, will be the path to store NxM files for training set,
                  each file contains a grid of data points
-
 - test_output - only used if the 3rd parameter is set to True, will be the path to store NxM files for testing set,
                 each file contains a grid of data points
-
 - n - NxM grid, the N value, for x axis
-
 - m - NxM grid, the M value, for y axis
-
 - x - column name of the x coordinate in input file
-
 - y - column name of the y coordinate in input file
-
 '''
 def get_grids(train, test, outputFile = False, train_output = None, test_output = None, n = 10, m = 10, x = 'x', y = 'y'):
     if isinstance(train, basestring):
