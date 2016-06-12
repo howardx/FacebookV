@@ -25,6 +25,7 @@ def train_model(coord_tup, train_grid, param, model_dict, unique_class_dict, fea
     param['num_class'] = len(original_label)
 
     num_round, param['max_depth'] = tnm.tune_numRound_maxDepth(param['num_class'], num_leaf_mltpr = leaf_mltpr)
+    print "number of unique classes: " + str(param['num_class'])
     print "number of boosters in training: " + str(num_round)
 
     train_X, train_Y = fps.feature_predictor_split(train, predictor_idx)
